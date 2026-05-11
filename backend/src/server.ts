@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import knex from "knex";
 import path from "path";
 import clientsRouter from "./routes/clients";
+import invoicesRouter from "./routes/invoices";
 
 dotenv.config();
 
@@ -22,6 +23,7 @@ const db = knex({
 });
 
 app.use("/api/clients", clientsRouter);
+app.use("/api/invoices", invoicesRouter);
 
 app.use((err: Error & { status?: number }, _req: Request, res: Response, _next: NextFunction) => {
   console.error(err.message);
