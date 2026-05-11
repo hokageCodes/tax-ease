@@ -1,9 +1,30 @@
 import { Router, Request, Response } from "express";
 import { db } from "../server";
 import { validateCreateInvoice } from "../middleware/validation";
-import { Invoice } from "../types";
+import { Invoice, InvoiceSummary } from "../types";
 
 const router = Router();
+
+router.get("/summary", async (_req: Request, res: Response) => {
+  try {
+    const invoiceSummary: InvoiceSummary[] = await db("invoices")
+      .join("clients", "invoices.client_id", "clients.id")
+      .select(
+        "invoices.id",
+        "clients.name as client_name",
+        "invoices.amount",
+        "invoices.tax_rate",
+        "invoices.status",
+        "invoices.created_at",
+        db.raw("ROUND(invoices.amount * invoices.tax_rate / 100, 2) as tax_owed")
+      )
+      .orderBy("invoices.created_at", "desc");
+
+    res.json(invoiceSummary);
+  } catch (error: any) {
+    res.status(500).json({ error: "Failed to fetch invoice summary", details: error.message });
+  }
+});
 
 router.post("/", validateCreateInvoice, async (req: Request, res: Response) => {
   const { client_id, amount, tax_rate } = req.body;
