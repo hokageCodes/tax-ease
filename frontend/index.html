@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tax & Invoice Dashboard</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div class="container">
+    <header>¬ø
+      <h1>Tax &amp; Invoice Dashboard</h1>
+    </header>
+
+    <main>
+      <section class="summary-section">
+        <h2>Invoices</h2>
+        <div id="invoice-summary" class="invoice-table">
+          <p class="loading">Loading invoices...</p>
+        </div>
+      </section>
+
+      <section class="create-section">
+        <h2>Create New Invoice</h2>
+        <form id="create-invoice-form">
+          <div class="form-group">
+            <label for="client-select">Client</label>
+            <select id="client-select" required>
+              <option value="">-- Select a client --</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="amount">Amount ($)</label>
+            <input type="number" id="amount" placeholder="e.g. 5000" step="0.01" min="0.01" required>
+          </div>
+
+          <div class="form-group">
+            <label for="tax-rate">Tax Rate (%)</label>
+            <input type="number" id="tax-rate" placeholder="e.g. 15" min="0" max="100" step="0.1" required>
+          </div>
+
+          <button type="submit" class="btn-primary">Create Invoice</button>
+          <p id="form-message" class="form-message"></p>
+        </form>
+      </section>
+    </main>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/components.js"></script>
+  <script src="js/state.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
