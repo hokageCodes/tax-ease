@@ -3,49 +3,101 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tax & Invoice Dashboard</title>
+  <title>TaxEase — Invoice Dashboard</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-  <div class="container">
-    <header>¬ø
-      <h1>Tax &amp; Invoice Dashboard</h1>
-    </header>
 
-    <main>
-      <section class="summary-section">
-        <h2>Invoices</h2>
-        <div id="invoice-summary" class="invoice-table">
-          <p class="loading">Loading invoices...</p>
+  <header class="topnav">
+    <div class="topnav__logo">
+      <i class="fa-solid fa-leaf"></i>
+      TaxEase
+    </div>
+    <nav class="topnav__links">
+      <a href="#" class="active"><i class="fa-solid fa-chart-pie"></i> Dashboard</a>
+      <a href="#"><i class="fa-solid fa-file-invoice-dollar"></i> Invoices</a>
+      <a href="#"><i class="fa-solid fa-percent"></i> Taxes</a>
+    </nav>
+    <div class="topnav__actions">
+      <i class="fa-regular fa-bell topnav__bell"></i>
+      <div class="avatar">B</div>
+    </div>
+  </header>
+
+  <main class="page">
+
+    <div class="page__hero">
+      <div>
+        <h1 class="page__title">Hello, Busayo!</h1>
+      </div>
+      <button class="btn-new" id="toggle-form-btn">
+        <i class="fa-solid fa-plus"></i> New Invoice
+      </button>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-card__icon stat-card__icon--red">
+          <i class="fa-regular fa-clock"></i>
         </div>
-      </section>
+        <span class="stat-card__badge stat-card__badge--awaiting">Awaiting</span>
+        <p class="stat-card__label">Outstanding Invoices</p>
+        <p class="stat-card__value" id="stat-outstanding">$0.00</p>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card__icon stat-card__icon--green">
+          <i class="fa-solid fa-circle-check"></i>
+        </div>
+        <span class="stat-card__badge stat-card__badge--ontrack">On Track</span>
+        <p class="stat-card__label">Total Tax Owed</p>
+        <p class="stat-card__value" id="stat-tax">$0.00</p>
+      </div>
+    </div>
 
-      <section class="create-section">
-        <h2>Create New Invoice</h2>
+    <!-- Modal Overlay -->
+    <div class="modal-overlay" id="modal-overlay">
+      <div class="modal">
+        <div class="modal__header">
+          <h2><i class="fa-solid fa-file-invoice"></i> New Invoice</h2>
+          <button class="btn-close" id="close-form-btn"><i class="fa-solid fa-xmark"></i></button>
+        </div>
         <form id="create-invoice-form">
           <div class="form-group">
-            <label for="client-select">Client</label>
+            <label for="client-select"><i class="fa-regular fa-user"></i> Client</label>
             <select id="client-select" required>
-              <option value="">-- Select a client --</option>
+              <option value="">&#8212; Select a client &#8212;</option>
             </select>
           </div>
-
-          <div class="form-group">
-            <label for="amount">Amount ($)</label>
-            <input type="number" id="amount" placeholder="e.g. 5000" step="0.01" min="0.01" required>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="amount"><i class="fa-solid fa-dollar-sign"></i> Amount</label>
+              <input type="number" id="amount" placeholder="e.g. 5000" step="0.01" min="0.01" required>
+            </div>
+            <div class="form-group">
+              <label for="tax-rate"><i class="fa-solid fa-percent"></i> Tax Rate</label>
+              <input type="number" id="tax-rate" placeholder="e.g. 15" min="0" max="100" step="0.1" required>
+            </div>
           </div>
-
-          <div class="form-group">
-            <label for="tax-rate">Tax Rate (%)</label>
-            <input type="number" id="tax-rate" placeholder="e.g. 15" min="0" max="100" step="0.1" required>
-          </div>
-
-          <button type="submit" class="btn-primary">Create Invoice</button>
+          <button type="submit" class="btn-primary">
+            <i class="fa-solid fa-paper-plane"></i> Create Invoice
+          </button>
           <p id="form-message" class="form-message"></p>
         </form>
-      </section>
-    </main>
-  </div>
+      </div>
+    </div>
+
+    <!-- Invoice List -->
+    <div class="invoices-card">
+      <div class="invoices-card__header">
+        <h2>Recent Invoices</h2>
+      </div>
+      <div id="invoice-summary">
+        <p class="loading">Loading invoices...</p>
+      </div>
+    </div>
+
+  </main>
 
   <script src="js/api.js"></script>
   <script src="js/components.js"></script>

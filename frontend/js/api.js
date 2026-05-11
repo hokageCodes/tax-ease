@@ -11,6 +11,7 @@ async function fetchAPI(endpoint, options = {}) {
     throw new Error(error.error || `HTTP ${response.status}`);
   }
 
+  if (response.status === 204) return null;
   return response.json();
 }
 
@@ -29,5 +30,9 @@ const API = {
 
   updateInvoiceStatus(id, status) {
     return fetchAPI(`/invoices/${id}/status`, { method: "PATCH", body: JSON.stringify({ status }) });
+  },
+
+  deleteInvoice(id) {
+    return fetchAPI(`/invoices/${id}`, { method: "DELETE" });
   },
 };

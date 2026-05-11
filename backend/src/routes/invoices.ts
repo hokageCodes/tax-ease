@@ -50,4 +50,45 @@ router.post("/", validateCreateInvoice, async (req: Request, res: Response) => {
   }
 });
 
+router.patch("/:id/status", async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const { status } = req.body;
+
+  if (!["Paid", "Unpaid"].includes(status)) {
+    res.status(400).json({ error: "Status must be 'Paid' or 'Unpaid'" });
+    return;
+  }
+
+  try {
+    const invoice = await db("invoices").where("id", id).first();
+    if (!invoice) {
+      res.status(404).json({ error: "Invoice not found" });
+      return;
+    }
+
+    await db("invoices").where("id", id).update({ status });
+    const updated = await db("invoices").where("id", id).first();
+    res.json(updated);
+  } catch (error: any) {
+    res.status(500).json({ error: "Failed to update status", details: error.message });
+  }
+});
+
+router.delete("/:id", async (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  try {
+    const invoice = await db("invoices").where("id", id).first();
+    if (!invoice) {
+      res.status(404).json({ error: "Invoice not found" });
+      return;
+    }
+
+    await db("invoices").where("id", id).del();
+    res.status(204).send();
+  } catch (error: any) {
+    res.status(500).json({ error: "Failed to delete invoice", details: error.message });
+  }
+});
+
 export default router;
