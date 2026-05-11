@@ -16,41 +16,6 @@ A lightweight full-stack application for managing clients and calculating tax on
 | Database | SQLite3 via Knex.js (migrations + seeds) |
 | Frontend | Vanilla HTML, CSS, JavaScript |
 
----
-
-## Project Structure
-
-```
-├── backend/
-│   ├── src/
-│   │   ├── db/
-│   │   │   ├── migrations/     # Schema versioning
-│   │   │   ├── seeds/          # Demo client data
-│   │   │   └── knexfile.ts     # Knex configuration
-│   │   ├── middleware/
-│   │   │   └── validation.ts   # Request validation
-│   │   ├── routes/
-│   │   │   ├── clients.ts      # GET /api/clients
-│   │   │   └── invoices.ts     # POST, GET, PATCH, DELETE /api/invoices
-│   │   ├── server.ts           # Express app entry point
-│   │   └── types.ts            # TypeScript interfaces
-│   ├── .env.example
-│   ├── package.json
-│   └── tsconfig.json
-│
-├── frontend/
-│   ├── index.html
-│   ├── css/styles.css
-│   └── js/
-│       ├── api.js              # Fetch wrapper for all API calls
-│       ├── components.js       # UI rendering functions
-│       ├── state.js            # Client-side state + pagination
-│       └── app.js              # App orchestrator + event handlers
-│
-├── docs/
-│   └── dashboard.png
-└── README.md
-```
 
 ---
 
