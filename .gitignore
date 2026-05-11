@@ -1,0 +1,5 @@
+node_modules/
+.env
+data/invoices.db
+dist/
+.DS_Store
