@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import knex from "knex";
 import path from "path";
+import clientsRouter from "./routes/clients";
 
 dotenv.config();
 
@@ -20,7 +21,9 @@ const db = knex({
   useNullAsDefault: true,
 });
 
-app.use((err: Error & { status?: number }, req: Request, res: Response, next: NextFunction) => {
+app.use("/api/clients", clientsRouter);
+
+app.use((err: Error & { status?: number }, _req: Request, res: Response, _next: NextFunction) => {
   console.error(err.message);
   res.status(err.status || 500).json({ error: err.message });
 });
